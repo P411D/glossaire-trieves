@@ -59,7 +59,7 @@ body {
 }
 
 .language-switcher:hover {
-    color: #1c3291; /* Changement de couleur au survol */
+    color: #1c3291; /* Changement de couleur au survol */ 
 }
 
 .language-switcher i {
@@ -173,4 +173,112 @@ body {
     font-style: italic; /* Texte en italique */
     font-size: 0.9em; /* Taille de police légèrement plus petite */
     margin-top: 5px; /* Espacement avec la définition */
+}
+
+/* Styles par défaut (mode clair) */
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.search-container, .resultats-container {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#search-input {
+    color: #333;
+    transition: color 0.3s;
+}
+
+.language-switcher {
+    color: #333;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.language-switcher:hover {
+    color: #1c3291; /* ça fait double et je m'en fous */
+}   
+
+/* Styles pour le mode sombre */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .search-container,
+.dark-mode .resultats-container {
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .logo, .dark-mode .mot, .dark-mode .categorie, .dark-mode .prononciation, .dark-mode .signification, .dark-mode .definition, .dark-mode .exemple {
+    color: #e0e0e0;
+}
+
+.dark-mode .suggestions-container {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .suggestions-container p:hover {
+    background-color: #333;
+}
+
+body.dark-mode #search-input {
+    color: #e0e0e0;
+}
+
+body.dark-mode .language-switcher {
+    color: #e0e0e0;
+}
+
+body.dark-mode .language-switcher:hover {
+    color: #ff6b6b; /* Couleur différente pour le survol en mode sombre */
+}
+
+/* Styles pour le bouton de basculement du mode sombre */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.dark-mode-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.dark-mode-toggle label {
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.dark-mode-toggle label::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+}
+
+/* Déplacer le bouton rond vers la droite lorsque le toggle est activé */
+.dark-mode-toggle input[type="checkbox"]:checked + label::after {
+    transform: translateX(20px);
+}
+
+/* Changer la couleur du fond du toggle en mode sombre */
+.dark-mode-toggle input[type="checkbox"]:checked + label {
+    background-color: #666;
 }

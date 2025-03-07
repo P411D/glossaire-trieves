@@ -33,40 +33,47 @@ function afficherSuggestions(term) {
 
     if (term.length > 0 && Array.isArray(dictionnaire)) {
         const languageText = document.getElementById('language-text').textContent;
-        const suggestions = dictionnaire.filter(entry => {
+        const suggestions = [];
+
+        dictionnaire.forEach(entry => {
             if (languageText === 'Français - Occitan') {
-                // Vérifier si entry.francais existe avant d'utiliser .toLowerCase()
-                return entry.francais && normaliserChaine(entry.francais.toLowerCase()).startsWith(normaliserChaine(term.toLowerCase()));
+                // Ajouter le mot français principal s'il correspond et s'il existe
+                if (entry.francais && normaliserChaine(entry.francais.toLowerCase()).startsWith(normaliserChaine(term.toLowerCase()))) {
+                    suggestions.push({ type: 'main', text: entry.francais });
+                }
+                // Ajouter les mots français des significations s'ils correspondent et s'ils existent
+                if (entry.significations) {
+                    entry.significations.forEach(signification => {
+                        if (signification.francais && normaliserChaine(signification.francais.toLowerCase()).startsWith(normaliserChaine(term.toLowerCase()))) {
+                            suggestions.push({ type: 'signification', text: signification.francais });
+                        }
+                    });
+                }
             } else {
-                // Vérifier si entry.occitan existe avant d'utiliser .toLowerCase()
-                return entry.occitan && normaliserChaine(entry.occitan.toLowerCase()).startsWith(normaliserChaine(term.toLowerCase()));
+                // Ajouter le mot occitan s'il correspond et s'il existe
+                if (entry.occitan && normaliserChaine(entry.occitan.toLowerCase()).startsWith(normaliserChaine(term.toLowerCase()))) {
+                    suggestions.push({ type: 'main', text: entry.occitan });
+                }
             }
         });
 
         if (suggestions.length > 0) {
             suggestions.forEach((suggestion, index) => {
                 const p = document.createElement('p');
-                let texte = '';
-
-                if (languageText === 'Français - Occitan') {
-                    texte = ' '.repeat(10) + (suggestion.francais || ''); // Utiliser une chaîne vide si suggestion.francais est undefined
-                } else {
-                    texte = ' '.repeat(10) + (suggestion.occitan || ''); // Utiliser une chaîne vide si suggestion.occitan est undefined
-                }
-
-                p.textContent = texte;
+                p.textContent = suggestion.text;
                 p.addEventListener('click', () => {
-                    document.getElementById('search-input').value = languageText === 'Français - Occitan' 
-                        ? suggestion.francais 
-                        : suggestion.occitan;
-
+                    document.getElementById('search-input').value = suggestion.text;
                     suggestionsContainer.style.display = 'none';
                     searchContainer.classList.remove('has-suggestions');
 
                     const query = document.getElementById('search-input').value;
                     const resultats = dictionnaire.filter(entry => {
                         if (languageText === 'Français - Occitan') {
-                            return entry.francais && normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                            const matchesFrancais = entry.francais && normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                            const matchesSignifications = entry.significations && entry.significations.some(signification =>
+                                signification.francais && normaliserChaine(signification.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()))
+                            );
+                            return matchesFrancais || matchesSignifications;
                         } else {
                             return entry.occitan && normaliserChaine(entry.occitan.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
                         }
@@ -88,6 +95,8 @@ function afficherSuggestions(term) {
     }
 }
 
+
+
 function normaliserChaine(chaine) {
     return chaine
         .normalize('NFD') // Décompose les caractères accentués en caractères de base + accents
@@ -102,57 +111,65 @@ function afficherResultats(resultats, langue) {
 
     if (resultats.length > 0) {
         resultats.forEach(resultat => {
-            const p = document.createElement('p');
-            let texte = '';
-
             if (langue === 'Français - Occitan') {
-                // Afficher le mot français suivi de ":"
-                texte = `<span class="mot">${resultat.francais || ''}</span> :<br><br>`;
-
-                // Afficher le mot occitan, la prononciation et la catégorie
-                texte += `<span class="mot">${resultat.occitan || ''}</span> <span class="prononciation">\\${resultat.prononciation || ''}\\</span> <span class="categorie">(${resultat.categorie || ''})</span><br>`;
-
-                // Afficher les significations, définitions et exemples
+                // Parcourir les significations pour afficher les résultats correspondants
                 if (resultat.significations) {
-                    resultat.significations.forEach((signification, index) => {
-                        texte += `
-                            <span class="signification">${index + 1}. ${signification.francais || ''}</span><br>
-                            <span class="definition">${signification.definition || ''}</span><br>
-                            <span class="exemple">Exemple : ${signification.exemple || ''}</span><br><br>
-                        `;
+                    resultat.significations.forEach(signification => {
+                        if (normaliserChaine(signification.francais.toLowerCase()) === normaliserChaine(document.getElementById('search-input').value.toLowerCase())) {
+                            const p = document.createElement('p');
+                            let texte = '';
+
+                            // Afficher le mot français suivi de ":"
+                            texte = `<span class="mot">${signification.francais}</span> :<br><br>`;
+
+                            // Afficher le mot occitan, la prononciation et la catégorie
+                            texte += `<span class="mot">${resultat.occitan}</span> <span class="prononciation">\\${resultat.prononciation}\\</span> <span class="categorie">(${resultat.categorie})</span><br>`;
+
+                            // Afficher l'exemple
+                            texte += `<span class="exemple">Exemple : ${signification.exemple}</span><br><br>`;
+
+                            p.innerHTML = texte;
+                            container.appendChild(p);
+                        }
                     });
                 } else if (resultat.francais) {
                     // Afficher les informations pour les mots avec une seule signification
-                    texte += `
-                        <span class="definition">${resultat.definition || ''}</span><br>
-                        <span class="exemple">Exemple : ${resultat.exemple || ''}</span><br>
-                    `;
+                    const p = document.createElement('p');
+                    let texte = `<span class="mot">${resultat.francais}</span> :<br><br>`;
+                    texte += `<span class="mot">${resultat.occitan}</span> <span class="prononciation">\\${resultat.prononciation}\\</span> <span class="categorie">(${resultat.categorie})</span><br>`;
+                    texte += `<span class="definition">${resultat.definition}</span><br>`;
+                    texte += `<span class="exemple">Exemple : ${resultat.exemple}</span><br><br>`;
+                    p.innerHTML = texte;
+                    container.appendChild(p);
                 }
             } else {
+                const p = document.createElement('p');
+                let texte = '';
+
                 // Afficher le mot occitan, la prononciation et la catégorie
-                texte = `<span class="mot">${resultat.occitan || ''}</span> <span class="prononciation">\\${resultat.prononciation || ''}\\</span> <span class="categorie">(${resultat.categorie || ''})</span> :<br><br>`;
+                texte = `<span class="mot">${resultat.occitan}</span> <span class="prononciation">\\${resultat.prononciation}\\</span> <span class="categorie">(${resultat.categorie})</span> :<br><br>`;
 
                 // Afficher les significations, définitions et exemples
                 if (resultat.significations) {
                     resultat.significations.forEach((signification, index) => {
                         texte += `
-                            <span class="signification">${index + 1}. ${signification.francais || ''}</span><br>
-                            <span class="definition">${signification.definition || ''}</span><br>
-                            <span class="exemple">Exemple : ${signification.exemple || ''}</span><br><br>
+                            <span class="signification">${index + 1}. ${signification.francais}</span><br>
+                            <span class="definition">${signification.definition}</span><br>
+                            <span class="exemple">Exemple : ${signification.exemple}</span><br><br>
                         `;
                     });
                 } else if (resultat.francais) {
                     // Afficher les informations pour les mots avec une seule signification
                     texte += `
-                        <span class="signification">${resultat.francais || ''}</span><br>
-                        <span class="definition">${resultat.definition || ''}</span><br>
-                        <span class="exemple">Exemple : ${resultat.exemple || ''}</span><br>
+                        <span class="signification">${resultat.francais}</span><br>
+                        <span class="definition">${resultat.definition}</span><br>
+                        <span class="exemple">Exemple : ${resultat.exemple}</span><br>
                     `;
                 }
-            }
 
-            p.innerHTML = texte;
-            container.appendChild(p);
+                p.innerHTML = texte;
+                container.appendChild(p);
+            }
         });
         container.style.display = 'block';
     } else {
@@ -163,6 +180,11 @@ function afficherResultats(resultats, langue) {
     }
 }
 
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    document.getElementById('dark-mode-toggle').textContent = isDarkMode ? 'Mode Clair' : 'Mode Sombre';
+});
 
 // Écouter les changements dans le champ de recherche
 document.getElementById('search-input').addEventListener('input', function() {
@@ -186,9 +208,15 @@ document.getElementById('search-icon').addEventListener('click', function() {
         const languageText = document.getElementById('language-text').textContent;
         const resultats = dictionnaire.filter(entry => {
             if (languageText === 'Français - Occitan') {
-                return normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                // Vérifier si le mot français principal correspond
+                const matchesFrancais = entry.francais && normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                // Vérifier les mots français dans les significations
+                const matchesSignifications = entry.significations && entry.significations.some(signification =>
+                    signification.francais && normaliserChaine(signification.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()))
+                );
+                return matchesFrancais || matchesSignifications;
             } else {
-                return normaliserChaine(entry.occitan.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                return entry.occitan && normaliserChaine(entry.occitan.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
             }
         });
 
@@ -209,9 +237,15 @@ document.getElementById('search-input').addEventListener('keypress', function(ev
             const languageText = document.getElementById('language-text').textContent;
             const resultats = dictionnaire.filter(entry => {
                 if (languageText === 'Français - Occitan') {
-                    return normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                    // Vérifier si le mot français principal correspond
+                    const matchesFrancais = entry.francais && normaliserChaine(entry.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                    // Vérifier les mots français dans les significations
+                    const matchesSignifications = entry.significations && entry.significations.some(signification =>
+                        signification.francais && normaliserChaine(signification.francais.toLowerCase()).includes(normaliserChaine(query.toLowerCase()))
+                    );
+                    return matchesFrancais || matchesSignifications;
                 } else {
-                    return normaliserChaine(entry.occitan.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
+                    return entry.occitan && normaliserChaine(entry.occitan.toLowerCase()).includes(normaliserChaine(query.toLowerCase()));
                 }
             });
 
@@ -225,8 +259,35 @@ document.getElementById('search-input').addEventListener('keypress', function(ev
     }
 });
 
+
 // Désactiver la loupe au démarrage
 document.getElementById('search-icon').classList.add('disabled');
 
 // Charger le dictionnaire au démarrage
 chargerDictionnaire();
+
+// Fonction pour appliquer le mode sombre en fonction des préférences système
+function applySystemPreference() {
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const darkModeCheckbox = document.getElementById('dark-mode-toggle');
+
+    if (prefersDarkScheme) {
+        document.body.classList.add('dark-mode');
+        darkModeCheckbox.checked = true; // Synchronisation ici
+    } else {
+        document.body.classList.remove('dark-mode');
+        darkModeCheckbox.checked = false; // Synchronisation ici
+    }
+}
+
+
+// Appliquer les préférences système au chargement de la page
+applySystemPreference();
+
+// Écouter les changements de préférences système
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applySystemPreference);
+
+// Écouter les changements manuels du bouton de basculement
+document.getElementById('dark-mode-toggle').addEventListener('change', function() {
+    document.body.classList.toggle('dark-mode', this.checked);
+});
