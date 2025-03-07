@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossaire de l'occitan du Trièves</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="logo">
+        Glossaire de l'occitan du Trièves
+    </div>
+
+    <!-- Barre de recherche avec sélecteur de langue intégré -->
+    <div class="search-container">
+        <!-- Champ de recherche -->
+        <input type="text" id="search-input" placeholder="Rechercher dans le glossaire...">
+
+        <!-- Bouton de sélecteur de langue -->
+        <button id="language-switcher" class="language-switcher" title="Inverser">
+            <span id="language-text">Français - Occitan</span>
+            <i class="fas fa-exchange-alt"></i>
+        </button>
+
+        <!-- Icône de recherche -->
+        <i class="fas fa-search" id="search-icon" title="Rechercher"></i>
+
+        <!-- Conteneur pour les suggestions -->
+        <div class="suggestions-container" id="suggestions-container"></div>
+    </div>
+
+    <!-- Conteneur pour les résultats -->
+    <div class="resultats-container" id="resultats-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

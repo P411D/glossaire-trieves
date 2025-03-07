@@ -1,0 +1,133 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrer verticalement */
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.logo {
+    font-size: 36px; /* Ajuster la taille */
+    font-weight: 700; /* Gras */
+    color: #333; /* Gris foncé */
+    margin-bottom: 50px; /* Espace entre le logo et la barre de recherche */
+    margin-top: -200px; /* Déplacer le logo plus haut */
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 24px; /* Coins arrondis par défaut */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    max-width: 90%;
+    position: relative; /* Ajouté pour positionner les suggestions */
+}
+
+/* Enlever les bords du bas de la barre de recherche lorsqu'il y a des suggestions */
+.search-container.has-suggestions {
+    border-radius: 24px 24px 0 0; /* Coins arrondis uniquement en haut */
+}
+
+#search-input {
+    padding: 10px;
+    font-size: 16px;
+    border: none; /* Supprimer la bordure */
+    outline: none; /* Supprimer le contour */
+    flex: 1; /* Prendre l'espace restant */
+    background-color: transparent; /* Fond transparent */
+    margin-right: 10px; /* Espace entre le champ de recherche et le sélecteur de langue */
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: none; /* Supprimer la bordure */
+    outline: none; /* Supprimer le contour */
+    background-color: transparent; /* Fond transparent */
+    cursor: pointer;
+    color: #333; /* Texte gris foncé */
+    margin-right: 10px; /* Espace entre le sélecteur de langue et la loupe */
+}
+
+.language-switcher:hover {
+    color: #1c3291; /* Changement de couleur au survol */
+}
+
+.language-switcher i {
+    margin-left: 8px; /* Espace entre le texte et l'icône */
+}
+
+#search-icon {
+    font-size: 18px;
+    color: #999; /* Couleur gris clair */
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transition de couleur fluide */
+    padding: 10px;
+    border-radius: 50%; /* Rendre l'icône ronde */
+}
+
+#search-icon:hover:not(.disabled) {
+    color: #fff; /* Couleur de la loupe en blanc */
+    background-color: #1c3291; /* Arrière-plan bleu */
+}
+
+#search-icon.disabled {
+    cursor: not-allowed; /* Curseur "non autorisé" */
+    opacity: 0.5; /* Réduire l'opacité */
+    pointer-events: none; /* Désactiver les événements de souris */
+}
+
+.suggestions-container {
+    position: absolute; /* Position absolue pour coller au conteneur parent */
+    top: 100%; /* Positionner en dessous de la barre de recherche sans espace */
+    left: 0; /* Aligner a gauche */
+    width: 100%; /* Prendre la même largeur que la barre de recherche */
+    background-color: #fff;
+    border-radius: 0 0 24px 24px; /* Coins arrondis uniquement en bas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre uniquement en bas */
+    clip-path: inset(0px -10px -10px -10px);
+    display: none; /* Caché par défaut */
+    z-index: 10; /* S'assurer qu'il est au-dessus des autres éléments */
+    text-indent: 10px;
+}
+
+.suggestions-container p {
+    padding: 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.suggestions-container p:hover {
+    background-color: #f0f0f0; /* Changement de couleur au survol */
+}
+
+/* Style pour le dernier élément des suggestions */
+.suggestions-container p:last-child {
+    border-radius: 0 0 24px 24px; /* Coins arrondis uniquement en bas */
+}
+
+.resultats-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    max-width: 90%;
+    display: none; /* Caché par défaut */
+}
+
+#resultats-container p.no-results {
+    color: #888; /* Texte gris */
+    font-style: italic; /* Texte en italique */
+    text-align: center; /* Centrer le texte */
+}   

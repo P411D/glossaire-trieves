@@ -1,0 +1,13 @@
+[
+    { "francais": "bonjour", "occitan": "bonjorn" },
+    { "francais": "bonjour", "occitan": "bonjorn" },    
+    { "francais": "merci", "occitan": "mercés" },
+    { "francais": "soleil", "occitan": "solelh" },
+    { "francais": "lune", "occitan": "luna" },
+    { "francais": "eau", "occitan": "aiga" },
+    { "francais": "arbre", "occitan": "arbre" },
+    { "francais": "maison", "occitan": "ostal" },
+    { "francais": "chien", "occitan": "can" },
+    { "francais": "chat", "occitan": "gat" },
+    { "francais": "oiseau", "occitan": "aucèl" }
+]
