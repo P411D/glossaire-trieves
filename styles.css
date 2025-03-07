@@ -100,9 +100,11 @@ body {
     text-indent: 10px;
 }
 
+/* Style pour les suggestions */
 .suggestions-container p {
-    padding: 10px;
+    font-size: 16px; /* Même taille que la barre de recherche */
     margin: 0;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -126,8 +128,49 @@ body {
     display: none; /* Caché par défaut */
 }
 
+/* Style pour les résultats */
+.resultats-container p {
+    font-size: 16px; /* Même taille que la barre de recherche */
+    margin: 5px 0;
+}
+
 #resultats-container p.no-results {
     color: #888; /* Texte gris */
     font-style: italic; /* Texte en italique */
     text-align: center; /* Centrer le texte */
 }   
+
+.mot {
+    font-weight: bold; /* Mettre en gras les mots */
+    color: #1c3291; /* Couleur bleue pour les mots */
+}
+
+.categorie {
+    font-style: italic; /* Mettre en italique la catégorie */
+    color: #888; /* Couleur grise pour la catégorie */
+}
+
+.prononciation {
+    color: #555; /* Couleur gris foncé */
+    font-size: 1.1em; /* Taille de police légèrement plus petite */
+    font-family: monospace; /* Police à chasse fixe pour la phonétique */
+}
+
+.signification {
+    font-weight: bold; /* Mettre en gras les significations */
+    color: #1c3291; /* Couleur bleue pour les significations */
+    margin-top: 10px; /* Espacement entre les significations */
+}
+
+.definition {
+    color: #444; /* Couleur gris foncé */
+    font-size: 0.9em; /* Taille de police légèrement plus petite */
+    margin-top: 5px; /* Espacement avec la signification */
+}
+
+.exemple {
+    color: #666; /* Couleur gris moyen */
+    font-style: italic; /* Texte en italique */
+    font-size: 0.9em; /* Taille de police légèrement plus petite */
+    margin-top: 5px; /* Espacement avec la définition */
+}

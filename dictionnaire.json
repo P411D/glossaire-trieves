@@ -1,13 +1,27 @@
 [
-    { "francais": "bonjour", "occitan": "bonjorn" },
-    { "francais": "bonjour", "occitan": "bonjorn" },    
-    { "francais": "merci", "occitan": "mercés" },
-    { "francais": "soleil", "occitan": "solelh" },
-    { "francais": "lune", "occitan": "luna" },
-    { "francais": "eau", "occitan": "aiga" },
-    { "francais": "arbre", "occitan": "arbre" },
-    { "francais": "maison", "occitan": "ostal" },
-    { "francais": "chien", "occitan": "can" },
-    { "francais": "chat", "occitan": "gat" },
-    { "francais": "oiseau", "occitan": "aucèl" }
+    {
+        "francais": "chien",
+        "occitan": "gos",
+        "categorie": "nom",
+        "prononciation": "ɡus",
+        "definition": "Animal domestique de la famille des canidés.",
+        "exemple": "Lo gos es lo melhor amic de l'òme."
+    },
+    {
+        "occitan": "adobar",
+        "categorie": "verbe",
+        "prononciation": "aduˈba",
+        "significations": [
+            {
+                "francais": "raccommoder",
+                "definition": "Réparer un vêtement abîmé.",
+                "exemple": "Adobar un pantalon."
+            },
+            {
+                "francais": "réparer",
+                "definition": "Remettre en état un objet endommagé.",
+                "exemple": "Adobar una maquina."
+            }
+        ]
+    }
 ]
