@@ -1,27 +1,27 @@
 [
-    {
-        "francais": "chien",
-        "occitan": "chin",
-        "categorie": "nom",
-        "prononciation": "ɡus",
-        "definition": "Animal domestique de la famille des canidés.",
-        "exemple": "Lo chin es lo melhor amic de l'òme."
-    },
-    {
-        "occitan": "adobar",
-        "categorie": "verbe",
-        "prononciation": "aduˈba",
-        "significations": [
-            {
-                "francais": "raccommoder",
-                "definition": "Réparer un vêtement abîmé.",
-                "exemple": "Adobar un pantalon."
-            },
-            {
-                "francais": "réparer",
-                "definition": "Remettre en état un objet endommagé.",
-                "exemple": "Adobar una maquina."
-            }
-        ]
-    }
+  {
+    "occitan": "chin",
+    "categorie": "nom",
+    "prononciation": "ʃi",
+    "francais": "chien",
+    "definition": "Animal domestique de la famille des canidés.",
+    "exemple": "Lo chin es lo melhor amic de l'òme."
+  },
+  {
+    "occitan": "adobar",
+    "categorie": "verbe",
+    "prononciation": "aduˈba",
+    "significations": [
+      {
+        "francais": "raccommoder",
+        "definition": "Réparer un vêtement abîmé.",
+        "exemple": "Adobar un pantalon."
+      },
+      {
+        "francais": "réparer",
+        "definition": "Remettre en état un objet endommagé.",
+        "exemple": "Adobar una maquina."
+      }
+    ]
+  }
 ]

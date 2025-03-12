@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonétiseur Occitan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Bouton de basculement du mode sombre -->
+    <div class="dark-mode-toggle">
+        <input type="checkbox" id="themeToggle">
+        <label for="themeToggle"></label>
+    </div>
+
+    <div class="container">
+        <h1>Phonétiseur Occitan</h1>
+        <div class="card">
+            <div class="mb-3">
+                <label for="occitanInput" class="form-label">Entrez un mot ou une phrase en occitan :</label>
+                <input type="text" class="form-control" id="occitanInput" placeholder="Exemple : ostau, consurtar">
+            </div>
+            <button onclick="convert()" class="btn btn-primary">Convertir</button>
+            <div class="mt-4">
+                <h4>Résultat en API :</h4>
+                <div id="result" class="alert alert-success"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lien vers le fichier JavaScript -->
+    <script src="phonetiseur.js"></script>
+</body>
+</html>
