@@ -6,4 +6,4 @@ Il existe des dictionnaires en ligne pour de nombreux dialctes de l'occitan dont
 Vous y verrez les spécificités de l'occitan du Trièves, les différences comme les ressemblances avec les parlers autour de la région.
 Pour l'instant c'est qu'un glossaire.
 
-Pour accéder au site: https://tecnomagi.github.io/glossaire-trieves/
+Pour accéder au site: https://p411d.github.io/glossaire-trieves/
